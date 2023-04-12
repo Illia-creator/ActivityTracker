@@ -1,15 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ActivityTracker.Domain.Entities
+﻿namespace ActivityTracker.Application.Dto.ProjectDto
 {
-    public class Project
+    public class UpdateProjectDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
-
-        public List<Activity> Activities { get; set; }
     }
 }
