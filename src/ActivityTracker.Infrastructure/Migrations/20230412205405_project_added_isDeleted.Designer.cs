@@ -4,6 +4,7 @@ using ActivityTracker.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ActivityTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(ActivityTrackerDbContext))]
-    partial class ActivityTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230412205405_project_added_isDeleted")]
+    partial class project_added_isDeleted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

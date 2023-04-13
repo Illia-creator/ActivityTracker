@@ -5,10 +5,10 @@ namespace ActivityTracker.Application.ServicesContracts
 {
     public interface IProjectService
     {
-        Task<IQueryable<Project>> GetAllProjectsAsync();
-        Task<Project> GetProjectByIdAsync(int id);
-        Task CreateProjectAsync(CreateProjectDto projectDto);
-        Task UpdateProjectAsync(UpdateProjectDto projectDto);
-        Task DeleteProjectAsync(int id);
+        ValueTask<IEnumerable<Project>> GetAllProjectsAsync();
+        ValueTask<Project> GetProjectByIdAsync(int id);
+        ValueTask CreateProjectAsync(CreateProjectDto projectDto);
+        ValueTask UpdateProjectAsync(UpdateProjectDto projectDto);
+        ValueTask DeleteProjectAsync(int id);
     }
 }

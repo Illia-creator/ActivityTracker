@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ActivityTracker.Application\ActivityTracker.Application.csproj" />
     <ProjectReference Include="..\ActivityTracker.Domain\ActivityTracker.Domain.csproj" />
   </ItemGroup>
 
