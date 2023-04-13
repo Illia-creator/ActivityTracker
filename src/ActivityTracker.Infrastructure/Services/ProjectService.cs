@@ -2,6 +2,7 @@
 using ActivityTracker.Application.ServicesContracts;
 using ActivityTracker.Domain.Entities;
 using ActivityTracker.Infrastructure.Persistence;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -22,23 +23,22 @@ namespace ActivityTracker.Infrastructure.Services
         {
             try
             {
-                if (projectDto == null) throw new ArgumentNullException("Project Dto Is Null");
+                if (projectDto == null)
+                    throw new ArgumentNullException("Project Dto Is Null");
+
                 Project project = await _context.Projects.FirstOrDefaultAsync(x => x.Name == projectDto.Name);
+
                 if (project == null)
                 {
-                    Project newProject = new Project();
+                    var result = projectDto.Adapt<Project>();
 
-                    newProject.Name = projectDto.Name;
-                    newProject.IsDeleted = false;
-                    newProject.DateStart = projectDto.DateStart;
-                    newProject.DateEnd = projectDto.DateEnd;
-
-                    _context.Projects.Add(newProject);
+                    _context.Projects.Add(result);
                     await _context.SaveChangesAsync();
 
                     _logger.LogInformation("Project created successfully");
                 }
-                else throw new Exception("Project is already exist");
+                else
+                    throw new Exception("Project is already exist");
             }
             catch (Exception ex)
             {
@@ -55,11 +55,13 @@ namespace ActivityTracker.Infrastructure.Services
                 if (project != null && project.IsDeleted != true)
                 {
                     project.IsDeleted = true;
+
                     await _context.SaveChangesAsync();
 
                     _logger.LogInformation("Project deleted successfully");
                 }
-                else throw new Exception("Project does not exist or deleted");
+                else
+                    throw new Exception("Project does not exist or deleted");
             }
             catch (Exception ex)
             {
@@ -90,7 +92,8 @@ namespace ActivityTracker.Infrastructure.Services
             {
                 var project = await _context.Projects.FirstOrDefaultAsync(x => x.Id == id);
 
-                if (project == null) throw new Exception("Any project was found");
+                if (project == null)
+                    throw new Exception("Any project was found");
 
                 _logger.LogInformation("Project got successfully");
                 
@@ -107,18 +110,16 @@ namespace ActivityTracker.Infrastructure.Services
         {
             try
             {
-                Project projectToUpdate = await _context.Projects.FirstOrDefaultAsync(x => x.Id == projectDto.Id);
+                Project projectToUpdate = await _context.Projects.AsNoTracking().FirstOrDefaultAsync(x => x.Id == projectDto.Id);
 
-                if (projectToUpdate == null) throw new Exception("Project does not exist");
+                if (projectToUpdate == null)
+                    throw new Exception("Project does not exist");
                 else
                 {
-                    projectToUpdate.Id = projectDto.Id;
-                    projectToUpdate.Name = projectDto.Name;
-                    projectToUpdate.IsDeleted = projectDto.IsDeleted;
-                    projectToUpdate.DateStart = projectDto.DateStart;
-                    projectToUpdate.DateEnd = projectDto.DateEnd;
+                    var result = projectDto.Adapt<Project>();
 
-                    _context.Projects.Update(projectToUpdate);
+                    _context.Projects.Update(result);
+
                     await _context.SaveChangesAsync();
 
                     _logger.LogInformation("Project updated successfully");
