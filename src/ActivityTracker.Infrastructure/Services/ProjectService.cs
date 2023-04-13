@@ -35,6 +35,8 @@ namespace ActivityTracker.Infrastructure.Services
 
                     _context.Projects.Add(newProject);
                     await _context.SaveChangesAsync();
+
+                    _logger.LogInformation("Project created successfully");
                 }
                 else throw new Exception("Project is already exist");
             }
@@ -54,6 +56,8 @@ namespace ActivityTracker.Infrastructure.Services
                 {
                     project.IsDeleted = true;
                     await _context.SaveChangesAsync();
+
+                    _logger.LogInformation("Project deleted successfully");
                 }
                 else throw new Exception("Project does not exist or deleted");
             }
@@ -68,6 +72,8 @@ namespace ActivityTracker.Infrastructure.Services
             try
             {
                 var projects = await _context.Projects.ToListAsync();
+
+                _logger.LogInformation("Got all projects");
 
                 return projects;
             }
@@ -86,6 +92,8 @@ namespace ActivityTracker.Infrastructure.Services
 
                 if (project == null) throw new Exception("Any project was found");
 
+                _logger.LogInformation("Project got successfully");
+                
                 return project;
             }
             catch (Exception ex)
@@ -112,6 +120,8 @@ namespace ActivityTracker.Infrastructure.Services
 
                     _context.Projects.Update(projectToUpdate);
                     await _context.SaveChangesAsync();
+
+                    _logger.LogInformation("Project updated successfully");
                 }
             }
             catch (Exception ex)

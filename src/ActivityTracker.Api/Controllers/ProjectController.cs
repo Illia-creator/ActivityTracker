@@ -9,13 +9,10 @@ namespace ActivityTracker.Api.Controllers
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _service;
-        private readonly ILogger<ProjectController> _logger;
 
-        public ProjectController(IProjectService service, ILogger<ProjectController> logger)
+        public ProjectController(IProjectService service)
         {
             _service = service;
-            _logger = logger;
-
         }
 
         [HttpGet]
@@ -23,8 +20,6 @@ namespace ActivityTracker.Api.Controllers
         public async Task<IActionResult> GetAllProjects()
         {
             var result = await _service.GetAllProjectsAsync();
-
-            _logger.LogInformation("Got all projects");
 
             return Ok(result);
         }
@@ -35,8 +30,6 @@ namespace ActivityTracker.Api.Controllers
         {
             await _service.CreateProjectAsync(projectDto);
 
-            _logger.LogInformation("Project created successfully");
-
             return Ok();
         }
 
@@ -45,8 +38,6 @@ namespace ActivityTracker.Api.Controllers
         public async Task<IActionResult> DeleteProject(int id)
         {
             await _service.DeleteProjectAsync(id);
-
-            _logger.LogInformation("Project deleted successfully");
 
             return Ok();
         }
@@ -57,8 +48,6 @@ namespace ActivityTracker.Api.Controllers
         {
             var result = await _service.GetProjectByIdAsync(id);
 
-            _logger.LogInformation("Project got successfully");
-
             return Ok(result);
         }
 
@@ -67,8 +56,6 @@ namespace ActivityTracker.Api.Controllers
         public async Task<IActionResult> UpdateProject(UpdateProjectDto projectDto)
         {
             await _service.UpdateProjectAsync(projectDto);
-
-            _logger.LogInformation("Project updated successfully");
 
             return Ok();
         }

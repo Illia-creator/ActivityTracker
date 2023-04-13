@@ -33,6 +33,8 @@ namespace ActivityTracker.Infrastructure.Services
                     result = TrackerResult(activity).ToString();
                 }
 
+                _logger.LogInformation("Activities by person Id and Date got successfully");
+               
                 return result.ToString();
             }
             catch (Exception ex)
@@ -60,6 +62,8 @@ namespace ActivityTracker.Infrastructure.Services
                 {
                     result = TrackerResult(activity).ToString();
                 }
+
+                _logger.LogInformation("Activities by person Id and Number of week");
 
                 return result.ToString();
             }

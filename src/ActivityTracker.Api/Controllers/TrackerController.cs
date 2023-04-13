@@ -9,21 +9,17 @@ namespace ActivityTracker.Api.Controllers
     public class TrackerController : ControllerBase
     {
         private readonly ITrackerService _service;
-        private readonly ILogger<ProjectController> _logger;
 
-        public TrackerController(ITrackerService service, ILogger<ProjectController> logger)
+        public TrackerController(ITrackerService service)
         {
             _service = service;
-            _logger = logger;
         }
 
         [HttpGet]
         [Route("date-tracker")]
         public async Task<IActionResult> GetActivitiesByPersonAndDate([FromQuery]TrackerPersonAndDateDto trackerDto) 
         {
-            var result = _service.GetActivitiesByPersonAndDate(trackerDto);
-
-            _logger.LogInformation("Activities by person Id and Date got successfully");
+            var result = _service.GetActivitiesByPersonAndDate(trackerDto);           
 
             return Ok(result);
         }
@@ -33,8 +29,6 @@ namespace ActivityTracker.Api.Controllers
         public async Task<IActionResult> GetActivitiesByPersonAndWeekNumber([FromQuery]TrackerPersonAndWeekNumber trackerDto)
         {
             var result = _service.GetActivitiesByPersonAndWeekNumberAsync(trackerDto);
-
-            _logger.LogInformation("Activities by person Id and Number of week");
 
             return Ok(result);
         }
